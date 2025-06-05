@@ -5,3 +5,6 @@
 *.out
 *.log
 *.synctex.gz
+_region_.prv/
+_region_.tex
+*.fmt

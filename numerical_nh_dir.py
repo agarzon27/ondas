@@ -5,12 +5,6 @@ Created on Wed Jun  4 15:34:08 2025
 @author: agarz
 """
 
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jun  4 07:21:56 2025
-
-@author: agarz
-"""
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -40,13 +34,6 @@ B = np.diag(2*(1-sigma**2)*np.ones(N-1)) + \
     np.diag(sigma**2*np.ones(N-2),1) + \
     np.diag(sigma**2*np.ones(N-2),-1)
 
-# def u0_fun(x):
-#     if x <= 0.5:
-#         return x
-#     else:
-#         return 1 - x
-
-# u0_vec = np.vectorize(u0_fun)
 x = dx*np.arange(N+1)
 u_full = np.zeros(N+1)
 
@@ -76,8 +63,8 @@ plt.show()
 x_short = x[1:-1]
 nt=630
 for i in range(nt):
-    t = (i+2)*dt
-    u = B.dot(u1) + dt**2*f(x_short, t) - u0 
+    ts = (i+1)*dt
+    u = B.dot(u1) + dt**2*f(x_short, ts) - u0 
     if (i+2) % 120 == 0:
         u_full = np.concatenate(([0],u,[0]))
         t = (i+2)*dt

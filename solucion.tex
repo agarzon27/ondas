@@ -253,7 +253,7 @@ y a las condiciones iniciales
   u(x,0) = 0,~~u_t(x,0)=0.
 \end{equation}
 
-{\bf Soluci\'on anal\'itica:} Este problema puede resolverse por el m\'etod de expansi\'on en eigenfunciones. La soluci\'on $u(x,t)$ y la funci\'on de forzamiento $f(x,t)$ pueden expresarse en t\'erminos de las eigenfuciones $v_n(x)$ as\'i
+{\bf Soluci\'on anal\'itica:} Este problema puede resolverse por el m\'etodo de expansi\'on en eigenfunciones. La soluci\'on $u(x,t)$ y la funci\'on de forzamiento $f(x,t)$ pueden expresarse en t\'erminos de las eigenfuciones $v_n(x)$ as\'i
 \begin{align}
   \label{eq:uxt}
 u(x,t) &= \displaystyle\sum_{n=1}^\infty w_n(t)v_n(x) \\
@@ -267,7 +267,7 @@ y
 donde
 \begin{equation}
   \label{eq:16}
-  F_n(t) = 2 \int_0^1 f(x,t)\sin(n\pi x),~~n=1,2,3,...
+  F_n(t) = 2 \int_0^1 f(x,t)\sin(n\pi x) dx,~~n=1,2,3,...
 \end{equation}
 
 Al remplazar \eqref{eq:uxt} y \eqref{eq:fxt} en \eqref{eq:onda_nh} tenemos
@@ -280,7 +280,7 @@ Usando la ortogonalidad de las funciones $\sin(n\pi x)$ se llega a
   \label{eq:15}
   w''_n + (n\pi c)^2 w_n = F_n(t),~~n=1,2,3,...
 \end{equation}
-La ecuacione diferenciales ordinarias anteriores tienen soluciones 
+La ecuaciones diferenciales ordinarias anteriores tienen soluciones 
 \begin{equation}
   \label{eq:17}
   w_n(t) = A_n \cos(n\pi ct) + B_n \sin(n\pi ct) + \frac{1}{n\pi c}\int_0^t \sin[n\pi c(t-s)]F_n(s)ds.
@@ -302,8 +302,8 @@ por lo cual $w_n(0) = w'_n(0)=0$. Las condiciones anteriores implican $A_n = B_n
 \end{equation}
 
 {\bf Ejemplo:} Supongamos que $f(x,t) = \sin(t)\sin(\pi x)$. Es decir $F_1(t) = \sin(t)$, $F_n(t) = 0$, $n=2,3,...$. En este caso la soluci\'on \eqref{eq:20} se reduce a 
-\label{eq:21}
 \begin{equation}
+  \label{eq:21}
   u(x,t) = \left[-\frac{1}{(\pi c)^3 - \pi c}\sin(\pi ct) +
     \frac{1}{(\pi c)^2 - 1}\sin t \right]
   \sin(\pi x).
@@ -314,7 +314,7 @@ por lo cual $w_n(0) = w'_n(0)=0$. Las condiciones anteriores implican $A_n = B_n
   \label{eq:22}
     {\bf u}^{(j+1)} = B{\bf u}^{(j)} + {\bf f}^{(j)}- u^{(j-1)} + {\bf b}^{(j)},
 \end{equation}
-donde ${\bf f}^{(j)}$ tiene elementos $f_{j,m} = f(m\Delta x, j\Delta t)$. La Fig.
+donde ${\bf f}^{(j)}$ tiene elementos $f_{j,m} = f(m\Delta x, j\Delta t)$. La Fig. \ref{fig:num_nh_dir}, generada con el Listing \eqref{code:onda_nh_dir}, compara la soluci\'on anal\'itica \eqref{eq:21} con la soluci\'on num\'erica. 
 
 \begin{figure}[h]
   \centering
@@ -325,28 +325,107 @@ donde ${\bf f}^{(j)}$ tiene elementos $f_{j,m} = f(m\Delta x, j\Delta t)$. La Fi
   \includegraphics[width=6cm]{num_t_nh_4.8.pdf}
   \includegraphics[width=6cm]{num_t_nh_6.0.pdf}
   \caption{Comparaci\'on de la soluci\'on num\'erica con la soluci\'on anal\'itica de \eqref{eq:onda_nh}.}
-  \label{fig:num}
+  \label{fig:num_nh_dir}
 \end{figure}
+
+\lstinputlisting[language=Python, caption=Comparaci\'on de la soluci\'on anal\'itica y la soluci\'on num\'erica de \eqref{eq:onda_nh}, label=code:onda_nh_dir]{numerical_nh_dir.py}
 
 
 \clearpage
-% \section*{Problema 3}
-% Resolver la ecuaci\'on de onda unidimensional:
-% \begin{equation}
-%   \label{eq:onda}
-%   u_{tt} - c^2 u_{xx} = 0,~~0 \le x \le 1,~~t>0
-% \end{equation}
-% sujeta a las condiciones de frontera (Dirichlet):
-% \begin{equation}
-%   \label{eq:dirich}
-%   u(0,t) = g(t),~~u(1,t) = 0,
-% \end{equation}
-% y a las condiciones iniciales
-% \begin{equation}
-%   \label{eq:6}
-%   u(x,0) = 0,~~u_t(x,0)=0.
-% \end{equation}
+\section*{Problema 3}
+Resolver la ecuaci\'on de onda unidimensional:
+\begin{equation}
+  \label{eq:onda_nh_bc}
+  u_{tt} - c^2 u_{xx} = 0,~~0 \le x \le 1,~~t>0
+\end{equation}
+sujeta a las condiciones de frontera (Dirichlet):
+\begin{equation}
+  \label{eq:dirich}
+  u(0,t) = g(t),~~u(1,t) = 0,
+\end{equation}
+y a las condiciones iniciales
+\begin{equation}
+  \label{eq:6}
+  u(x,0) = 0,~~u_t(x,0)=0.
+\end{equation}
+{\bf Soluci\'on anal\'itica:} La soluci\'on $u(x,t)$ puede escribirse como la suma de dos funciones
+\begin{equation}
+  \label{eq:23}
+  u(x,t) = \phi(x,t) + \psi(x,t),
+\end{equation}
+donde $\psi(x,t)$ satisface las condiciones de frontera no homog\'eneas,
+\begin{equation}
+  \label{eq:28}
+  \psi(x,0) = g(t),~~\psi(x,1) = 0,
+\end{equation}
+y, como veremos en seguida, $\phi$ es la soluci\'on de un problema con condiciones de frontera homog\'eneas. Una elecci\'on v\'alida para $\psi$ es
+\begin{equation}
+  \label{eq:31}
+  \psi(x,t) = g(t)(1-x).
+\end{equation}
 
+Remplazando \eqref{eq:23} en \eqref{eq:onda_nh_bc},
+\begin{equation}
+  \label{eq:24}
+  \phi_{tt} + \psi_{tt} - c^2(\phi_{xx} + \psi_{xx}) = 0.
+\end{equation}
+y reordenando t\'erminos,
+\begin{equation}
+  \label{eq:25}
+  \phi_{tt} - c^2\phi_{xx} = f(x,t),
+\end{equation}
+donde
+\begin{align}
+  \label{eq:26}
+  f(x,t) &= -\psi_{tt} + c^2\psi_{xx} \\
+         &= g''(t)(x-1).
+\end{align}
+
+Las condiciones de frontera de $\phi$ est\'an determinadas por las condiciones de frontera de $u(x,t)$,
+\begin{align}
+  \label{eq:27}
+  u(0,t) &= \phi(0,t) + \psi(0,t) = g(t) \\
+  u(1,t) &= \phi(1,t) + \psi(1,t) = 0.
+\end{align}
+Es decir, $\phi$ debe cumplir condiciones de frontera homog\'eneas,
+\begin{equation}
+  \label{eq:29}
+  \phi(0,t) = \phi(1,t) = 0.
+\end{equation}
+An\'alogamente, las condiciones iniciales para $\phi$ se pueden determinar con base en las condiciones iniciales de $u(x,t)$,
+\begin{align}
+  \label{eq:30}
+  u(x,0) &= \phi(x,0) + \psi(x,0) = 0 \\
+  u_x(x,0) &= \phi_x(x,0) + \psi_x(x,0) = 0.
+\end{align}
+Es decir,
+\begin{align}
+  \label{eq:phi_bc}
+  \phi(x,0) &= -\psi(x,0) = g(t)(x-1) \\
+  \phi_x(x,0) &= -\psi_x(x,0) = g(t).
+\end{align}
+
+En resumen, $\phi$ debe cumplir el problema determinado por las ecuaciones \eqref{eq:25}, \eqref{eq:29} y \eqref{eq:phi_bc}, el cual es del mismo tipo que el Problema 2 (secci\'on anterior) y puede resolverse mediante el procedimiento presentado en esa secci\'on.
+
+{\bf Ejemplo:} Sea $g(t) = \sin(t)$. Entonces,
+
+\begin{align}
+  \label{eq:32}
+  f(x,t) &= \sin(t)(1-x) \\
+         &= \sin(t) \sum_{n=1}^\infty \frac{2}{n\pi}\sin(n\pi x).
+\end{align}
+
+La expansi\'on en serie de Fourier a la funci\'on  $f(x,\pi/2) = 1-x$ se presenta en la Fig. \ref{fig:fourier_nh_bc}, generada con el listing \ref{code:fourier_nh_bc}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=6cm]{fourier_nh_bc.pdf}
+  \caption{Aproximaci\'on por serie de Fourier.}
+  \label{fig:fourier_nh_bc}
+\end{figure}
+
+
+\lstinputlisting[language=Python, caption=Aproximaci\'on por serie de Fourier, label=code:fourier_nh_bc]{fourier_nh_bc.py}
 
 \end{document}
 
