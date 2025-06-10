@@ -304,9 +304,8 @@ por lo cual $w_n(0) = w'_n(0)=0$. Las condiciones anteriores implican $A_n = B_n
 {\bf Ejemplo:} Supongamos que $f(x,t) = \sin(t)\sin(\pi x)$. Es decir $F_1(t) = \sin(t)$, $F_n(t) = 0$, $n=2,3,...$. En este caso la soluci\'on \eqref{eq:20} se reduce a 
 \begin{equation}
   \label{eq:21}
-  u(x,t) = \left[-\frac{1}{(\pi c)^3 - \pi c}\sin(\pi ct) +
-    \frac{1}{(\pi c)^2 - 1}\sin t \right]
-  \sin(\pi x).
+  u(x,t) =  \left[-\frac{1}{(\pi c)^3 - \pi c}\sin(\pi ct) +
+    \frac{1}{(\pi c)^2 - 1}\sin t \right] \sin(\pi x).
 \end{equation}
 
 {\bf Soluci\'on num\'erica:} La soluci\'on num\'erica se puede calcular mediante la siguiente variaci\'on de la relaci\'on de recurrencia expresada en la Eq. \eqref{eq:1},
@@ -340,7 +339,7 @@ Resolver la ecuaci\'on de onda unidimensional:
 \end{equation}
 sujeta a las condiciones de frontera (Dirichlet):
 \begin{equation}
-  \label{eq:dirich}
+  \label{eq:nh_dirich}
   u(0,t) = g(t),~~u(1,t) = 0,
 \end{equation}
 y a las condiciones iniciales
@@ -396,16 +395,18 @@ An\'alogamente, las condiciones iniciales para $\phi$ se pueden determinar con b
 \begin{align}
   \label{eq:30}
   u(x,0) &= \phi(x,0) + \psi(x,0) = 0 \\
-  u_x(x,0) &= \phi_x(x,0) + \psi_x(x,0) = 0.
+  u_t(x,0) &= \phi_t(x,0) + \psi_t(x,0) = 0.
 \end{align}
 Es decir,
+\begin{subequations}
+\label{eq:phi_ic}
 \begin{align}
-  \label{eq:phi_bc}
-  \phi(x,0) &= -\psi(x,0) = g(t)(x-1) \\
-  \phi_x(x,0) &= -\psi_x(x,0) = g(t).
-\end{align}
+  \phi(x,0) &= -\psi(x,0) = g(0)(x-1) \\
+  \phi_t(x,0) &= -\psi_t(x,0) = g'(0)(x-1).
+\end{align}  
+\end{subequations}
 
-En resumen, $\phi$ debe cumplir el problema determinado por las ecuaciones \eqref{eq:25}, \eqref{eq:29} y \eqref{eq:phi_bc}, el cual es del mismo tipo que el Problema 2 (secci\'on anterior) y puede resolverse mediante el procedimiento presentado en esa secci\'on.
+En resumen, $\phi$ debe cumplir el problema determinado por las ecuaciones \eqref{eq:25}, \eqref{eq:29} y \eqref{eq:phi_ic}, el cual es del mismo tipo que el Problema 2 (secci\'on anterior) y puede resolverse mediante el procedimiento presentado en esa secci\'on.
 
 {\bf Ejemplo:} Sea $g(t) = \sin(t)$. Entonces,
 
@@ -414,18 +415,63 @@ En resumen, $\phi$ debe cumplir el problema determinado por las ecuaciones \eqre
   f(x,t) &= \sin(t)(1-x) \\
          &= \sin(t) \sum_{n=1}^\infty \frac{2}{n\pi}\sin(n\pi x).
 \end{align}
+De acuerdo con la soluci\'on del Problema 2, la funci\'on $\phi(x,t)$ tiene expansi\'on en serie de Fourier
+\begin{equation}
+  \label{eq:34}
+  \phi(x, t) = \sum_{n=1}^\infty w_n(t)\sin(n\pi x),
+\end{equation}
+donde los coeficientes $w_n(t)$ son soluciones de \eqref{eq:15} con las funciones de forzamiento $F_n(t)$ determinadas por la expansi\'on en serie de Fourier de $f(x,t)$,
+\begin{equation}
+f(x,t) = \sum_{n=1} F_n(t) \sin(n\pi x).
+\end{equation}
+Es decir
+\begin{equation}
+  \label{eq:35}
+  F_n(t) = \frac{2}{n\pi} \sin(t).
+\end{equation}
+La soluciones $w_n(t)$ pueden calcularse mediante la Ec. \eqref{eq:17}. Para hallar los coeficientes $A_n$ y $B_n$ usamos las condiciones iniciales \eqref{eq:phi_ic}, que se reducen a
+\begin{subequations}
+  \begin{align}
+    \phi(x,0) &= 0\\
+    \phi_t(x,0) &= x-1.
+  \end{align}
+\end{subequations}
+Por lo tanto $A_n = 0$ y $B_n$ se determina mediante,
+\begin{equation}
+  \label{eq:40}
+  \phi_t(x,0) = \sum_{n=1}^\infty n\pi c B_n \sin(n\pi x) = -\sum_{n=1}^\infty \frac{2}{n\pi} \sin(n\pi x),
+\end{equation}
+dando como resultado
+\begin{equation}
+  \label{eq:41}
+  B_n = -\frac{2}{(n\pi)^2 c}.
+\end{equation}
 
-La expansi\'on en serie de Fourier a la funci\'on  $f(x,\pi/2) = 1-x$ se presenta en la Fig. \ref{fig:fourier_nh_bc}, generada con el listing \ref{code:fourier_nh_bc}
+En consecuencia, los coeficientes $w_n(t)$ en \eqref{eq:34} toman la forma,
+\begin{equation}
+  w_n(t) = \frac{2}{n\pi}\left[\left( -\frac{1}{n\pi c} -\frac{1}{(n\pi c)^3 - (n\pi c)} \right)\sin(n\pi ct)
+    + \frac{1}{(n\pi c)^2-1}\sin(t) \right]
+\end{equation}
+Finalmente, la soluci\'on del problema original $u(x,t)$ se obtiene remplazando \eqref{eq:34} y \eqref{eq:31} en \eqref{eq:23}
+\begin{equation}
+  \label{eq:39}
+    u(x,t) = \sin(t)(1-x) + \sum_{n=1}^\infty w_n(t) \sin(n\pi x).
+\end{equation}
+
+{\bf Soluci\'on num\'erica:} La soluci\'on num\'erica se puede calcular con la relaci\'on de recurrencia \eqref{eq:1}, con $\alpha_j = \sin(j\Delta t)$ en ${\bf b}^{(j)}$. La Fig. \ref{fig:num_nh_bc}, generada con el Listing \ref{code:num_nh_bc}, compara la soluci\'on anal\'itica con la soluci\'on num\'erica para diferentes tiempos.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=6cm]{fourier_nh_bc.pdf}
-  \caption{Aproximaci\'on por serie de Fourier.}
-  \label{fig:fourier_nh_bc}
+    \includegraphics[width=6cm]{num_nh_bc_t_0.0.pdf} 
+  \includegraphics[width=6cm]{num_nh_bc_t_1.2.pdf} \\
+  \includegraphics[width=6cm]{num_nh_bc_t_2.4.pdf} 
+  \includegraphics[width=6cm]{num_nh_bc_t_3.6.pdf} \\
+  \includegraphics[width=6cm]{num_nh_bc_t_4.8.pdf}
+  \includegraphics[width=6cm]{num_nh_bc_t_6.0.pdf}
+  \caption{Comparaci\'on de la soluci\'on num\'erica con la soluci\'on anal\'itica del problema determinado por \eqref{eq:onda_nh_bc}, \eqref{eq:nh_dirich} y \eqref{eq:6}.}
+  \label{fig:num_nh_bc}
 \end{figure}
 
-
-\lstinputlisting[language=Python, caption=Aproximaci\'on por serie de Fourier, label=code:fourier_nh_bc]{fourier_nh_bc.py}
-
+\lstinputlisting[language=Python, caption={Comparaci\'on de la soluci\'on anal\'itica y la soluci\'on num\'erica del problema determinado por \eqref{eq:onda_nh_bc}, \eqref{eq:nh_dirich} y \eqref{eq:6}}, label=code:num_nh_bc]{numerical_nh_bc.py}
 \end{document}
 
